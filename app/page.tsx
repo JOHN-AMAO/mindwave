@@ -1,8 +1,11 @@
-export default function Home() {
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+export default async function Home() {
+  const supabase = createServerComponentClient({ cookies });
+  const { data: tweets } = await supabase.from("tweets").select();
   return (
     <div>
-      <h1>hi</h1>
-      <h1>ho</h1>
+      <pre>{JSON.stringify(tweets)}</pre>
     </div>
   );
 }
